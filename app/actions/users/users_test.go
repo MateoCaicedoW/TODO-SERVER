@@ -12,6 +12,13 @@ type ActionSuite struct {
 }
 
 func Test_ActionSuite(t *testing.T) {
-	as := &ActionSuite{suite.NewAction(app.New())}
+	todo, err := app.New()
+
+	if err != nil {
+		t.Error(err)
+		t.FailNow()
+	}
+
+	as := &ActionSuite{suite.NewAction(todo)}
 	suite.Run(t, as)
 }

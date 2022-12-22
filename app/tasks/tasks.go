@@ -1,6 +1,7 @@
 package grifts
 
 import (
+	"log"
 	"mjm/app"
 
 	"github.com/gobuffalo/buffalo"
@@ -9,5 +10,10 @@ import (
 // Init the tasks with some common tasks that come from
 // grift
 func init() {
-	buffalo.Grifts(app.New())
+	app, err := app.New()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	buffalo.Grifts(app)
 }

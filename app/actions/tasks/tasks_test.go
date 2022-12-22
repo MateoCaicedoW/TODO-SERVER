@@ -1,4 +1,4 @@
-package actions_test
+package tasks_test
 
 import (
 	"mjm/app"

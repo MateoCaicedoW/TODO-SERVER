@@ -26,8 +26,12 @@ var server = &servers.Simple{
 }
 
 func main() {
-	bapp := app.New()
-	if err := bapp.Serve(server); err != nil {
+	app, err := app.New()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if err := app.Serve(server); err != nil {
 		log.Fatal(err)
 	}
 }

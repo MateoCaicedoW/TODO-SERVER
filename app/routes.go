@@ -3,6 +3,7 @@ package app
 import (
 	"net/http"
 
+	"mjm/app/actions/tasks"
 	"mjm/app/actions/users"
 	"mjm/app/middleware"
 	"mjm/public"
@@ -21,6 +22,9 @@ func setRoutes(root *buffalo.App) {
 	usrs.GET("/", users.List)
 	usrs.PUT("/{id}", users.Update)
 	usrs.GET("/{id}", users.Show)
+
+	tsks := root.Group("/tasks")
+	tsks.POST("/", tasks.Create)
 
 	root.ServeFiles("/", http.FS(public.FS()))
 }
