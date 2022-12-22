@@ -25,6 +25,7 @@ func setRoutes(root *buffalo.App) {
 
 	tsks := root.Group("/tasks")
 	tsks.POST("/", tasks.Create)
+	tsks.GET("/", tasks.List)
 
 	root.ServeFiles("/", http.FS(public.FS()))
 }

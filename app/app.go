@@ -1,8 +1,10 @@
 package app
 
 import (
+	"fmt"
 	"mjm/internal/environment"
 	"strconv"
+	"time"
 
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/buffalo/binding"
@@ -59,6 +61,20 @@ func configure(app *buffalo.App) error {
 		return 0, nil
 
 	}, []interface{}{int(0)}, nil)
+
+	//custom decoder for time.time written as string
+	binding.RegisterCustomDecoder(func(vals []string) (interface{}, error) {
+		if len(vals) == 0 || vals[0] == "" {
+			return time.Time{}, nil
+		}
+		fmt.Println("vals[0]: ", vals[0])
+
+		if val, err := time.Parse("2006-01-02T15:04:05", vals[0]); err == nil {
+			return val, nil
+		}
+
+		return time.Time{}, nil
+	}, []interface{}{time.Time{}}, nil)
 
 	pop.PaginatorPerPageDefault = 20
 
