@@ -14,8 +14,11 @@ func setRoutes(root *buffalo.App) {
 	root.Use(middleware.RequestID)
 	root.Use(middleware.Database)
 	root.Use(middleware.ParameterLogger)
-	root.Use(middleware.CSRF)
+	// root.Use(middleware.CSRF)
 
-	root.GET("/", users.List)
+	usrs := root.Group("/users")
+	usrs.POST("/", users.Create)
+	usrs.GET("/", users.List)
+
 	root.ServeFiles("/", http.FS(public.FS()))
 }
