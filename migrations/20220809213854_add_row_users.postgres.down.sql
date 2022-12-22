@@ -1,1 +1,0 @@
-DELETE FROM users WHERE id='175afda1-82ef-4950-b8db-6dab15740d63';

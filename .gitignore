@@ -23,3 +23,4 @@ jhw.*
 .jhw-cache/
 *.sublime*
 .yarn/
+yarn.lock

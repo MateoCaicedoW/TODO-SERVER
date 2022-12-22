@@ -1,1 +1,0 @@
-DELETE FROM departments WHERE id='668eca48-bc11-49ff-81ea-2665d3130b42';
