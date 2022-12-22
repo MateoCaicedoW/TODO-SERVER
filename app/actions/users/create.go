@@ -17,7 +17,7 @@ func Create(c buffalo.Context) error {
 		return fmt.Errorf("error binding user: %w", err)
 	}
 
-	verrs := user.Validate()
+	verrs := user.Validate(tx)
 	if verrs.HasAny() {
 		return c.Render(422, r.JSON(verrs))
 	}

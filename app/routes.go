@@ -19,6 +19,8 @@ func setRoutes(root *buffalo.App) {
 	usrs := root.Group("/users")
 	usrs.POST("/", users.Create)
 	usrs.GET("/", users.List)
+	usrs.PUT("/{id}", users.Update)
+	usrs.GET("/{id}", users.Show)
 
 	root.ServeFiles("/", http.FS(public.FS()))
 }
