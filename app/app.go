@@ -9,6 +9,7 @@ import (
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/buffalo/binding"
 	"github.com/gobuffalo/pop/v6"
+	"github.com/rs/cors"
 )
 
 // App creates a new application with default settings and reading
@@ -16,11 +17,16 @@ import (
 // created before returning it
 
 func New() (*buffalo.App, error) {
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowCredentials: true,
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+	})
+
 	app := buffalo.New(buffalo.Options{
-		Env:           environment.Current(),
-		SessionName:   environment.SessionName,
-		WorkerOff:     true,
-		CompressFiles: true,
+		Env:         environment.Current(),
+		SessionName: environment.SessionName,
+		PreWares:    []buffalo.PreWare{c.Handler},
 	})
 
 	err := configure(app)
