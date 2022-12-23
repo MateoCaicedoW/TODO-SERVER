@@ -13,7 +13,7 @@ require (
 	github.com/wawandco/ox v0.12.2
 )
 
-require github.com/rs/cors v1.8.2 // indirect
+require github.com/rs/cors v1.8.2
 
 require (
 	github.com/BurntSushi/toml v1.1.0 // indirect
