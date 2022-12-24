@@ -2,6 +2,7 @@ package tasks
 
 import (
 	"fmt"
+	"mjm/internal/response"
 	"mjm/internal/tasks"
 
 	"github.com/gobuffalo/buffalo"
@@ -10,11 +11,15 @@ import (
 
 func List(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
+	res := response.Response{}
 
 	tasks, err := tasks.All(tx)
 	if err != nil {
 		return fmt.Errorf("error listing tasks: %w", err)
 	}
 
-	return c.Render(200, r.JSON(tasks))
+	res.Data = tasks
+	res.Status = 200
+
+	return c.Render(200, r.JSON(res))
 }

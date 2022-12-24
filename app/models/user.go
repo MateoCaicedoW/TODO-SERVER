@@ -12,16 +12,16 @@ import (
 )
 
 type User struct {
-	ID                   uuid.UUID `db:"id" `
-	Email                string    `db:"email"`
-	FirstName            string    `db:"first_name" `
-	LastName             string    `db:"last_name" `
-	Password             string    `db:"-" `
+	ID                   uuid.UUID `json:"id" db:"id"`
+	Email                string    `json:"email" db:"email"`
+	FirstName            string    `json:"first_name" db:"first_name"`
+	LastName             string    `json:"last_name" db:"last_name"`
+	Password             string    `json:"password" db:"-"`
 	PasswordHash         string    `db:"password_hash" `
-	PasswordConfirmation string    `db:"-"`
+	PasswordConfirmation string    `json:"password_confirmation" db:"-"`
 	CreatedAt            time.Time `db:"created_at"`
 	UpdatedAt            time.Time `db:"updated_at"`
-	Rol                  string    `db:"rol"`
+	Rol                  string    `json:"role" db:"rol"`
 	Tasks                []Task    `has_many:"tasks"`
 }
 
@@ -32,7 +32,6 @@ func (u *User) Validate(tx *pop.Connection) *validate.Errors {
 		&validators.StringIsPresent{Field: u.Email, Name: "Email"},
 		&validators.StringIsPresent{Field: u.FirstName, Name: "FirstName"},
 		&validators.StringIsPresent{Field: u.LastName, Name: "LastName"},
-		&validators.StringIsPresent{Field: u.FirstName, Name: "First Name"},
 		&validators.FuncValidator{
 			Fn: func() bool {
 				if u.FirstName != "" && !regexp.MustCompile(`^[a-zA-Z ]+$`).MatchString(u.FirstName) {

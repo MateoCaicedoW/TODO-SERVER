@@ -10,13 +10,12 @@ import (
 
 type Task struct {
 	ID          uuid.UUID `db:"id"`
-	Title       string    `db:"title" fako:"job_title" `
-	Description string    `db:"description" fako:"sentence" `
+	Title       string    `json:"title" db:"title" fako:"job_title" `
+	Description string    `json:"description" db:"description" fako:"sentence" `
 	CreatedAt   time.Time `db:"created_at" `
 	UpdatedAt   time.Time `db:"updated_at" `
-	UserID      uuid.UUID `db:"user_id" `
-	Must        time.Time `db:"must" `
-	Status      bool      `db:"status" `
+	UserID      uuid.UUID `json:"user_id" db:"user_id" `
+	Status      bool      `json:"status" db:"status" `
 	Complete    time.Time `db:"completeby" `
 	User        *User     `belongs_to:"users"`
 }
@@ -39,25 +38,7 @@ func (t *Task) Validate() *validate.Errors {
 			Name:    "UserID",
 			Message: "%s User can't be blank.",
 		},
-		// &validators.TimeIsPresent{Field: t.Must, Name: "Must"},
 
-		&validators.FuncValidator{
-			Fn: func() bool {
-				if t.Must != (time.Time{}) {
-
-					if time.Now().Format("2006-01-02") == t.Must.Format("2006-01-02") {
-						return true
-					}
-					if t.Must.Before(time.Now()) {
-						return false
-					}
-				}
-				return true
-			},
-			Field:   "",
-			Name:    "Must",
-			Message: "%s Must be a future date.",
-		},
 		&validators.FuncValidator{
 			Fn: func() bool {
 				if len(t.Title) > 50 {

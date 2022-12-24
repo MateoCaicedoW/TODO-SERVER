@@ -2,6 +2,7 @@ package users
 
 import (
 	"mjm/app/models"
+	"mjm/internal/response"
 
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop/v6"
@@ -12,9 +13,13 @@ func List(c buffalo.Context) error {
 
 	users := &models.Users{}
 
+	response := response.Response{}
+
 	if err := tx.All(users); err != nil {
 		return err
 	}
 
-	return c.Render(200, r.JSON(users))
+	response.Data = users
+	response.Status = 200
+	return c.Render(200, r.JSON(response))
 }

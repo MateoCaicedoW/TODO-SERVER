@@ -2,7 +2,6 @@ SELECT
 tasks.id "id",
 tasks.title "title",
 tasks.description "description",
-tasks.must "must",
 tasks.status "status",
 tasks.completeby "completed",
 users.rol "user_role",

@@ -16,7 +16,6 @@ type Task struct {
 	ID          uuid.UUID `json:"id" db:"id"`
 	Title       string    `json:"title" db:"title"`
 	Description string    `json:"description" db:"description"`
-	Must        time.Time `json:"must" db:"must"`
 	Completed   time.Time `json:"complete" db:"completed"`
 	Status      bool      `json:"status" db:"status"`
 	UserID      uuid.UUID `json:"user_id" db:"user_id"`
