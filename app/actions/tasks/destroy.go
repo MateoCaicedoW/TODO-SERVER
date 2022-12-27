@@ -1,25 +1,28 @@
 package tasks
 
 import (
-	"fmt"
+	"mjm/app/models"
 	"mjm/internal/response"
-	"mjm/internal/tasks"
 	"net/http"
 
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/pop/v6"
-	"github.com/gofrs/uuid"
 )
 
-func Show(c buffalo.Context) error {
+func Destroy(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 	res := response.Response{}
-	task, err := tasks.TaskForID(tx, uuid.FromStringOrNil(c.Param("id")))
-	if err != nil {
-		return fmt.Errorf("error finding task: %w", err)
+
+	task := models.Task{}
+
+	if err := tx.Find(&task, c.Param("id")); err != nil {
+		return err
 	}
 
-	res.Data = task
+	if err := tx.Destroy(&task); err != nil {
+		return err
+	}
+
 	res.Status = http.StatusOK
 	return c.Render(http.StatusOK, r.JSON(res))
 
